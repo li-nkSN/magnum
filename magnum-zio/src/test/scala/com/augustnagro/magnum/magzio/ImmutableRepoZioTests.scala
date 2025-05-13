@@ -14,7 +14,8 @@ def immutableRepoZioTests(
     xa: () => TransactorZIO
 )(using
     Location,
-    DbCodec[OffsetDateTime]
+    DbCodec[OffsetDateTime],
+    DbCodec[Option[Vector[Long]]]                     
 ): Unit =
   import suite.*
 
@@ -35,7 +36,8 @@ def immutableRepoZioTests(
       topSpeed: Int,
       @SqlName("vin") vinNumber: Option[Int],
       color: Color,
-      created: OffsetDateTime
+      created: OffsetDateTime,
+      relatedCarIds: Option[Vector[Long]]          
   ) derives DbCodec
 
   val carRepo = ImmutableRepo[Car, Long]
@@ -48,7 +50,8 @@ def immutableRepoZioTests(
       topSpeed = 208,
       vinNumber = Some(123),
       color = Color.Red,
-      created = OffsetDateTime.parse("2024-11-24T22:17:30.000000000Z")
+      created = OffsetDateTime.parse("2024-11-24T22:17:30.000000000Z"),
+      relatedCarIds = None
     ),
     Car(
       model = "Ferrari F8 Tributo",
@@ -56,7 +59,8 @@ def immutableRepoZioTests(
       topSpeed = 212,
       vinNumber = Some(124),
       color = Color.Green,
-      created = OffsetDateTime.parse("2024-11-24T22:17:31.000000000Z")
+      created = OffsetDateTime.parse("2024-11-24T22:17:31.000000000Z"),
+      relatedCarIds = None
     ),
     Car(
       model = "Aston Martin Superleggera",
@@ -64,7 +68,8 @@ def immutableRepoZioTests(
       topSpeed = 211,
       vinNumber = None,
       color = Color.Blue,
-      created = OffsetDateTime.parse("2024-11-24T22:17:32.000000000Z")
+      created = OffsetDateTime.parse("2024-11-24T22:17:32.000000000Z"),
+      relatedCarIds = None
     )
   )
 
